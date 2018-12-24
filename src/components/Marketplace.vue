@@ -61,10 +61,10 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 15px;
+    transition: border-color .3s
 }
 .grid-content:hover {
     border-color: #b5a9ca;
-    transition: border-color .3s
 }
 .row-bg {
     padding: 10px 0;

@@ -2,50 +2,71 @@
   <div>
     <div class="head">
       <div class="title">Services</div>
+      <div class="selections">
+        <span v-if="count" class="count"><strong>{{ count }}</strong> selected</span>
+        <el-button :disabled="!count" type="success" icon="fas fa-play-circle" circle></el-button>
+        <el-button :disabled="!count"  icon="fas fa-stop-circle" circle></el-button>
+        <el-button :disabled="!count"  icon="fas fa-minus-circle" circle></el-button>
+        <el-checkbox @change="selectAll" class="all-selected" v-model="allSelected"></el-checkbox>
+      </div>
     </div>
-    <div class="body">
-
-    </div>
-    <el-card class="box-card" v-for="service in services" :key="service.sid">
-      <el-tooltip effect="dark" :content="statusName(service.status)" placement="right">
-        <status-indicator class="status" v-bind="setStatus(service.status)"></status-indicator>
-      </el-tooltip>
-      <span class="name">{{ service.name }}</span>
-        <span class="sid">
-          sid: {{ service.sid }}
-        </span>
-    </el-card>
-    <!-- <el-table :data="services"  style="width: 100%">
-      <el-table-column prop="hash" label="Hash"></el-table-column>
-      <el-table-column prop="sid" label="SID"></el-table-column>
-      <el-table-column prop="name" label="Name"></el-table-column>
-      <el-table-column prop="status" label="Status">
-        <template slot-scope="scope">
-          <el-tooltip effect="dark" :content="statusName(scope.row.status)" placement="right">
-            <status-indicator v-bind="setStatus(scope.row.status)"></status-indicator>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-    </el-table> -->
+    <el-row :gutter="20">
+      <el-col :span="24">
+        <el-card class="box-card" :class="{ 'is-active': service.selected }" v-for="service in services" :key="service.sid">
+          <div class="body">
+            <el-tooltip effect="dark" :content="statusName(service.status)" placement="right">
+              <status-indicator class="status" v-bind="setStatus(service.status)"></status-indicator>
+            </el-tooltip>
+            <div class="info">
+              <div class="name">{{ service.name }}</div>
+              <div class="sid">
+                sid: {{ service.sid }}
+              </div>
+            </div>
+            <el-checkbox @change="select" v-model="service.selected"></el-checkbox>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import { StatusIndicator } from 'vue-status-indicator'
 
 export default {
   components: {
     StatusIndicator
   },
+  data() {
+    return {
+      value2: true,
+      allSelected: false,
+    }
+  },
   computed: {
     services () {
       return this.$store.state.services
-    }
+    },
+    count() {
+      return this.services.filter(service => !!service.selected).length
+    },
   },
   mounted() {
     this.refreshMessage()
   },
   methods: {
+    selectAll(selected) {
+      this.services.forEach(service => {
+        service.selected = selected
+      })
+    },
+    select(selected) {
+      if (!selected) {
+        this.allSelected = false
+      }
+    },
     refreshMessage() {
       this.$store.dispatch('refreshServices')
     },
@@ -109,11 +130,17 @@ export default {
   border-style: dashed;
   border-width: 1px;
   border-color: #dfd7ec;
+  transition: border-color .3s, background-color .3s, color .8s;
 }
-.el-card:hover {
-  background-color: #e4ddef;
-  cursor: pointer; 
-  color: #5d5d5d;
+.el-card:hover, .el-card.is-active {
+  /* background-color: #e4ddef;
+  color: #5d5d5d; */
+  background-color: #f7f3ff;
+  border-color: #b5a9ca;
+}
+.body {
+  display: flex;
+  align-items: center;
 }
 .status {
   margin-right: 15px;
@@ -125,9 +152,44 @@ export default {
 .sid {
   font-size: 13px;
   color: #ccc;
-  margin-left: 15px;
+  transition: color .8s;
 }
-.el-card:hover .sid {
+.el-card:hover .sid, .el-card.is-active .sid {
   color: #5d5d5d;
+}
+.el-upload-dragger {
+  width: 100%;
+}
+.info {
+  flex: 1;
+}
+.switch {
+}
+.count {
+  font-size: 13px;
+  margin-right: 15px;
+  text-transform: uppercase;
+  color: #666;
+}
+.all-selected {
+  margin: 0 21px;
+}
+</style>
+
+<style>
+
+.el-checkbox .el-checkbox__inner {
+  width: 22px;
+  height: 22px;
+}
+
+.el-checkbox__inner::after {
+  height: 14px;
+  left: 8px;
+  /* font-size: 30px; */
+}
+
+.fa {
+  font-size: 14px;
 }
 </style>

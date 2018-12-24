@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Element from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
+import './assets/theme/index.css';
 import 'vue-status-indicator/styles.css'
 import App from './App.vue'
 import Marketplace from './components/Marketplace.vue'
