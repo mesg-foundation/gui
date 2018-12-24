@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+protoc -I=$GOPATH/src/github.com/mesg-foundation/core/protobuf/coreapi/ api.proto \
+--js_out=import_style=commonjs:$PWD/proto \
+--grpc-web_out=import_style=commonjs,mode=grpcwebtext:$PWD/proto

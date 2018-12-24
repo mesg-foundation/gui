@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+docker build -t envoy:core .
+docker service create --name core-envoy --network core -p 50053:50053 envoy:core
