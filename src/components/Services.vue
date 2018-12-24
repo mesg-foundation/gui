@@ -2,6 +2,7 @@
   <div>
     <div class="head">
       <div class="title">Services</div>
+      <!-- <input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory> -->
       <div class="selections">
         <span v-if="count" class="count"><strong>{{ count }}</strong> selected</span>
         <el-button :disabled="!count" type="success" icon="fas fa-play-circle" circle></el-button>
@@ -57,6 +58,10 @@ export default {
     this.refreshMessage()
   },
   methods: {
+    handleFiles(event){
+      console.log(event.target.files)
+      // this.$store.dispatch('deployService', event.target.files[0])
+    },
     selectAll(selected) {
       this.services.forEach(service => {
         service.selected = selected

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * @fileoverview
  * @enhanceable
@@ -6,7 +8,7 @@
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
-/* eslint-disable */
+
 var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
@@ -2699,10 +2701,10 @@ proto.api.DeployServiceRequest.prototype.hasUrl = function() {
 
 /**
  * optional bytes chunk = 3;
- * @return {string}
+ * @return {!(string|Uint8Array)}
  */
 proto.api.DeployServiceRequest.prototype.getChunk = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -4449,10 +4451,10 @@ proto.api.LogData.prototype.setType = function(value) {
 
 /**
  * optional bytes data = 3;
- * @return {string}
+ * @return {!(string|Uint8Array)}
  */
 proto.api.LogData.prototype.getData = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 

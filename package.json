@@ -8,9 +8,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "blob-reader": "0.0.1",
     "element-ui": "^2.4.11",
     "google-protobuf": "^3.6.1",
     "grpc-web": "^1.0.3",
+    "grpc-web-client": "^0.7.0",
+    "ts-protoc-gen": "^0.8.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2",
     "vue-status-indicator": "^1.1.1",
@@ -34,7 +38,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

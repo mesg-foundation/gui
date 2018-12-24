@@ -1,7 +1,7 @@
-import { ListServicesRequest } from '../proto/api_pb.js'
-import { CoreClient } from'../proto/api_grpc_web_pb.js'
 
-var coreClient = new CoreClient('http://localhost:50053');
+import { ListServicesRequest, DeployServiceRequest } from '../proto/api_pb.js'
+require('../proto/api_pb_service.js')
+var coreClient = new exports.CoreClient('http://localhost:50053');
 
 export default {
   state: {
@@ -39,6 +39,34 @@ export default {
           context.commit('updateServices', services);
           resolve();
         });
+      });
+    },
+    deployService(a,file) {
+      return new Promise((resolve) => {
+        var request = new DeployServiceRequest();
+        // request.setUrl("https://github.com/mesg-foundation/service-webhook")
+        var stream = coreClient.deployService();
+        stream.on('data', function(a,b){
+          console.log(a,b)
+
+          resolve();
+        })
+
+              var reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = function() {
+
+        var arrayBuffer = this.result,
+          array = new Uint8Array(arrayBuffer)
+
+
+          var request = new DeployServiceRequest();
+          request.setChunk(array)
+          console.log(1)
+          stream.write(request)
+          stream.write(request)
+      }
+
       });
     }
   }

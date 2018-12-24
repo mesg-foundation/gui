@@ -24,7 +24,7 @@ import MainNav from './components/MainNav.vue'
 
 export default {
   name: 'app',
-  computed:  {
+  computed: {
     servicesPage() {
       return this.$route.path.split("/")[1] == "services"
     }
