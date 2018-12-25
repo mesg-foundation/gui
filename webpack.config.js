@@ -47,9 +47,11 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({  // Also generate a test.html
-        filename: 'index.html',
-        template: 'public/index.html'
-      })
+    new HtmlWebpackPlugin({
+      title: 'MESG UI',
+      filename: 'index.html',
+      template: 'public/index.html',
+      favicon: 'public/favicon.ico'
+    })
   ]
 }
