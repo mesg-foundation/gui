@@ -1,6 +1,6 @@
 
-import { ListServicesRequest, DeployServiceRequest } from '../proto/api_pb.js'
-import { CoreClient} from '../proto/api_pb_service.js'
+import { ListServicesRequest, DeployServiceRequest } from '../../proto/api_pb.js'
+import { CoreClient} from '../../proto/api_pb_service.js'
 
 var coreClient = new CoreClient('http://localhost:50053');
 
