@@ -5,9 +5,9 @@
       <!-- <input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory> -->
       <div class="selections">
         <span v-if="count" class="count"><strong>{{ count }}</strong> selected</span>
-        <el-button v-on:click="startServices" :disabled="!count" type="success" icon="fas fa-play-circle" circle></el-button>
-        <el-button v-on:click="stopServices" :disabled="!count"  icon="fas fa-stop-circle" circle></el-button>
-        <el-button v-on:click="deleteServices" :disabled="!count"  icon="fas fa-minus-circle" circle></el-button>
+        <el-button v-on:click="startServices" :disabled="!count" type="success" icon="fas fa-play" circle></el-button>
+        <el-button v-on:click="stopServices" :disabled="!count" type="warning" icon="fas fa-stop" circle></el-button>
+        <el-button v-on:click="deleteServices" :disabled="!count" type="danger" icon="fas fa-trash-alt" circle></el-button>
         <el-checkbox @change="selectAll" class="all-selected" v-model="allSelected"></el-checkbox>
       </div>
     </div>
@@ -232,5 +232,11 @@ export default {
 
 .fa {
   font-size: 14px;
+}
+.selections .el-button {
+  margin-left: 4px;
+}
+.selections .el-button.is-circle {
+  padding: 11px 12px 11px 12px
 }
 </style>
