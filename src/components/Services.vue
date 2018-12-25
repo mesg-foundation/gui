@@ -74,6 +74,7 @@ export default {
       this.$store.dispatch('startServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
         this.hideLoading()
+        this.allSelected = false
       })
     },
     stopServices(){
@@ -81,6 +82,7 @@ export default {
       this.$store.dispatch('stopServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
         this.hideLoading()
+        this.allSelected = false
       })
     },
     deleteServices(){
@@ -88,6 +90,7 @@ export default {
       this.$store.dispatch('deleteServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
         this.hideLoading()
+        this.allSelected = false
       })
     },
     handleFiles(event){

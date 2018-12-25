@@ -4,6 +4,7 @@ import {
   DeleteServiceRequest,
   StopServiceRequest,
   StartServiceRequest,
+  GetServiceRequest,
 } from '../../proto/api_pb.js'
 import { CoreClient} from '../../proto/api_pb_service.js'
 
@@ -15,10 +16,10 @@ export default {
     services: [],
     marketplace: {
       services: [
-        { name: "service-ethereum", by: "mesg-foundation", text: "Ethereum Service to interact with any Smart Contract.", logo: "https://i.imgur.com/Nkj8hnb.png" },
-        { name: "service-discord-invitation", by: "mesg-foundation", text: "Send an invitation to MESG's Discord", logo: "https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/discord-512.png" },
-        { name: "service-webhook", by: "mesg-foundation", text: "Receive HTTP connections and emit events with data", logo: "http://www.webhook.com/static/logo/logo.png" },
-        { name: "mesg-pusher", by: "Roms1383", text: "MESG Service for Pusher", logo: "https://d21buns5ku92am.cloudfront.net/67967/logo/retina-1530539712.png" },
+        { url:"https://github.com/mesg-foundation/service-ethereum",name: "service-ethereum", by: "mesg-foundation", text: "Ethereum Service to interact with any Smart Contract.", logo: "https://i.imgur.com/Nkj8hnb.png",isDeploying: false, },
+        { url:"https://github.com/mesg-foundation/service-discord-invitation", name: "service-discord-invitation", by: "mesg-foundation", text: "Send an invitation to MESG's Discord", logo: "https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/discord-512.png",isDeploying: false, },
+        { url:"https://github.com/mesg-foundation/service-webhook",name: "service-webhook", by: "mesg-foundation", text: "Receive HTTP connections and emit events with data", logo: "http://www.webhook.com/static/logo/logo.png",isDeploying: false, },
+        { url:"https://github.com/Roms1383/mesg-pusher",name: "mesg-pusher", by: "Roms1383", text: "MESG Service for Pusher", logo: "https://d21buns5ku92am.cloudfront.net/67967/logo/retina-1530539712.png",isDeploying: false, },
       ]
     }
   },
@@ -85,6 +86,27 @@ export default {
             if(doneCount == sids.length) resolve();
           })
         })
+      })
+    },
+    getService(context, sid){
+      return new Promise((resolve) => {
+        var req = new GetServiceRequest();
+        req.setServiceid(sid)
+        coreClient.getService(req, {}, (err, data)=> {
+          resolve({name: data.getService().getName()})
+        })
+      })
+    },
+    deployServiceFromURL(context, url){
+      return new Promise((resolve) => {
+        var req = new DeployServiceRequest();
+        req.setUrl(url)
+        var stream = coreClient.deployService();
+        stream.on('data', (data) => { 
+          var id = data.getServiceid()
+          if (id) resolve(id)
+        })
+        stream.write(req)
       })
     },
     deployService(a,file) {

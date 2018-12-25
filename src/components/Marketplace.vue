@@ -15,7 +15,7 @@
           <div class="name">{{ item.name }}</div>
           <div class="by">@{{ item.by }}</div>
           <div class="text">{{ item.text }}</div>
-          <el-button class="upload" icon="el-icon-upload" circle></el-button>
+          <el-button v-on:click="deploy(item)" class="upload" icon="el-icon-upload" circle :loading="item.isDeploying"></el-button>
         </div>
       </el-col>
     </el-row>
@@ -34,6 +34,20 @@ export default {
   computed: {
     items () {
       return this.$store.state.marketplace.services
+    }
+  },
+  methods: {
+    deploy(service){
+      service.isDeploying = true
+      this.$store.dispatch('deployServiceFromURL', service.url).then((deployed) => {
+        return this.$store.dispatch('getService', deployed).then((deployed) => {
+          service.isDeploying = false
+          this.$notify.success({
+            title: deployed.name+ ' service deployed',
+            position: 'bottom-right'
+          });
+        })
+      })
     }
   }
 }
