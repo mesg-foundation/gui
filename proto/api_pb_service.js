@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // package: api
 // file: api.proto
 

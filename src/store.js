@@ -1,7 +1,8 @@
 
 import { ListServicesRequest, DeployServiceRequest } from '../proto/api_pb.js'
-require('../proto/api_pb_service.js')
-var coreClient = new exports.CoreClient('http://localhost:50053');
+import { CoreClient} from '../proto/api_pb_service.js'
+
+var coreClient = new CoreClient('http://localhost:50053');
 
 export default {
   state: {
