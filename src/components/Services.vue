@@ -43,20 +43,24 @@ export default {
   data() {
     return {
       value2: true,
+      loading: false,
       allSelected: false,
-      loading: false
     }
   },
   computed: {
     services () {
-      return this.$store.state.services
+      return this.$store.state.services.sort(function(a, b){
+        if(a.sid < b.sid) { return -1; }
+        if(a.sid > b.sid) { return 1; }
+        return 0;
+      })
     },
     count() {
       return this.getSelected().length
     },
   },
   mounted() {
-    this.refreshMessage()
+    this.$store.dispatch('refreshServices')
   },
   methods: {
     showLoading(){
@@ -91,7 +95,7 @@ export default {
       // this.$store.dispatch('deployService', event.target.files[0])
     },
     getSelected() {
-      return this.services.filter(service => !!service.selected)
+      return this.services.filter(service => service.selected)
     },
     getSelectedSIDs() {
       return this.getSelected().map(service => service.sid)
@@ -104,15 +108,11 @@ export default {
     select(selected) {
       if (!selected) {
         this.allSelected = false
-      }else{
-        var selectedCount = this.services.filter((i)=>{ return i.selected === true });
-        if (selectedCount.length == this.services.length) {
+      } else{
+        if (this.getSelected().length == this.services.length) {
           this.allSelected = true;
         }
-      }      
-    },
-    refreshMessage() {
-      this.$store.dispatch('refreshServices')
+      }
     },
     setStatus(status) {
       var attr = {}
