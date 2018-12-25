@@ -1,5 +1,6 @@
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -48,10 +49,12 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      title: 'MESG UI',
       filename: 'index.html',
       template: 'public/index.html',
       favicon: 'public/favicon.ico'
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'public/install-envoy' }
+    ])
   ]
 }

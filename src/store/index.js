@@ -7,6 +7,7 @@ import {
   GetServiceRequest,
 } from '../../proto/api_pb.js'
 import { CoreClient} from '../../proto/api_pb_service.js'
+import axios from 'axios'
 
 
 var coreClient = new CoreClient('http://localhost:50053');
@@ -29,6 +30,17 @@ export default {
     }
   },
   actions: {
+    checkStatus(context){
+      return new Promise((resolve) => {
+        axios
+        .get('http://localhost:50053')
+        .then(response => {
+          resolve(true)
+        }).catch(err => {
+          resolve(false)
+        })
+      })
+    },
     refreshServices(context) {
       return new Promise((resolve) => {
         var request = new ListServicesRequest();
