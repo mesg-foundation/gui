@@ -5,9 +5,9 @@
       <!-- <input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory> -->
       <div class="selections">
         <span v-if="count" class="count"><strong>{{ count }}</strong> selected</span>
-        <el-button :disabled="!count" type="success" icon="fas fa-play-circle" circle></el-button>
-        <el-button :disabled="!count"  icon="fas fa-stop-circle" circle></el-button>
-        <el-button :disabled="!count"  icon="fas fa-minus-circle" circle></el-button>
+        <el-button v-on:click="startServices" :disabled="!count" type="success" icon="fas fa-play-circle" circle></el-button>
+        <el-button v-on:click="stopServices" :disabled="!count"  icon="fas fa-stop-circle" circle></el-button>
+        <el-button v-on:click="deleteServices" :disabled="!count"  icon="fas fa-minus-circle" circle></el-button>
         <el-checkbox @change="selectAll" class="all-selected" v-model="allSelected"></el-checkbox>
       </div>
     </div>
@@ -51,16 +51,40 @@ export default {
       return this.$store.state.services
     },
     count() {
-      return this.services.filter(service => !!service.selected).length
+      return this.getSelected().length
     },
   },
   mounted() {
     this.refreshMessage()
   },
   methods: {
+    startServices(){
+      this.$store.dispatch('startServices', this.getSelectedSIDs()).then(()=>{
+        this.$store.dispatch('refreshServices')
+        console.log("done")
+      })
+    },
+    stopServices(){
+      this.$store.dispatch('stopServices', this.getSelectedSIDs()).then(()=>{
+        this.$store.dispatch('refreshServices')
+        console.log("done")
+      })
+    },
+    deleteServices(){
+      this.$store.dispatch('deleteServices', this.getSelectedSIDs()).then(()=>{
+        this.$store.dispatch('refreshServices')
+        console.log("done")
+      })
+    },
     handleFiles(event){
       console.log(event.target.files)
       // this.$store.dispatch('deployService', event.target.files[0])
+    },
+    getSelected() {
+      return this.services.filter(service => !!service.selected)
+    },
+    getSelectedSIDs() {
+      return this.getSelected().map(service => service.sid)
     },
     selectAll(selected) {
       this.services.forEach(service => {

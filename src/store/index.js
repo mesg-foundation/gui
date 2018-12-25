@@ -1,6 +1,12 @@
-
-import { ListServicesRequest, DeployServiceRequest } from '../../proto/api_pb.js'
+import {
+  ListServicesRequest,
+  DeployServiceRequest,
+  DeleteServiceRequest,
+  StopServiceRequest,
+  StartServiceRequest,
+} from '../../proto/api_pb.js'
 import { CoreClient} from '../../proto/api_pb_service.js'
+
 
 var coreClient = new CoreClient('http://localhost:50053');
 
@@ -41,6 +47,45 @@ export default {
           resolve();
         });
       });
+    },
+    startServices(context, sids){
+      return new Promise((resolve) => {
+        var doneCount = 0;
+        sids.forEach(sid => {
+          var req = new StartServiceRequest();
+          req.setServiceid(sid)
+          coreClient.startService(req, {}, (err)=> {
+            doneCount++
+            if(doneCount == sids.length) resolve();
+          })
+        })
+      })
+    },
+    stopServices(context, sids){
+      return new Promise((resolve) => {
+        var doneCount = 0;
+        sids.forEach(sid => {
+          var req = new StopServiceRequest();
+          req.setServiceid(sid)
+          coreClient.stopService(req, {}, (err)=> {
+            doneCount++
+            if(doneCount == sids.length) resolve();
+          })
+        })
+      })
+    },
+    deleteServices(context, sids){
+      return new Promise((resolve) => {
+        var doneCount = 0;
+        sids.forEach(sid => {
+          var req = new DeleteServiceRequest();
+          req.setServiceid(sid)
+          coreClient.deleteService(req, {}, (err)=> {
+            doneCount++
+            if(doneCount == sids.length) resolve();
+          })
+        })
+      })
     },
     deployService(a,file) {
       return new Promise((resolve) => {
