@@ -23,7 +23,7 @@
                 sid: {{ service.sid }}
               </div>
             </div>
-            <el-checkbox @change="select" v-model="service.selected"></el-checkbox>
+            <el-checkbox @change="select" :checked="service.selected" v-model="service.selected" :key="service.sid"  ></el-checkbox>
           </div>
         </el-card>
       </el-col>
@@ -33,7 +33,7 @@
 
 <script>
 /* eslint-disable */
-import { StatusIndicator } from 'vue-status-indicator'
+import { StatusIndicator } from 'vue-status-indicator';
 
 export default {
   components: {
@@ -65,7 +65,12 @@ export default {
     select(selected) {
       if (!selected) {
         this.allSelected = false
-      }
+      }else{
+        var selectedCount = this.services.filter((i)=>{ return i.selected === true });
+        if (selectedCount.length == this.services.length) {
+          this.allSelected = true;
+        }
+      }      
     },
     refreshMessage() {
       this.$store.dispatch('refreshServices')
