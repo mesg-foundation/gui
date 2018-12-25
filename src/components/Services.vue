@@ -24,7 +24,7 @@
                 sid: {{ service.sid }}
               </div>
             </div>
-            <el-checkbox @change="select" v-model="service.selected"></el-checkbox>
+            <el-checkbox @change="select" :checked="service.selected" v-model="service.selected" :key="service.sid"  ></el-checkbox>
           </div>
         </el-card>
       </el-col>
@@ -34,7 +34,7 @@
 
 <script>
 /* eslint-disable */
-import { StatusIndicator } from 'vue-status-indicator'
+import { StatusIndicator } from 'vue-status-indicator';
 
 export default {
   components: {
@@ -70,7 +70,12 @@ export default {
     select(selected) {
       if (!selected) {
         this.allSelected = false
-      }
+      }else{
+        var selectedCount = this.services.filter((i)=>{ return i.selected === true });
+        if (selectedCount.length == this.services.length) {
+          this.allSelected = true;
+        }
+      }      
     },
     refreshMessage() {
       this.$store.dispatch('refreshServices')
@@ -138,8 +143,6 @@ export default {
   transition: border-color .3s, background-color .3s, color .8s;
 }
 .el-card:hover, .el-card.is-active {
-  /* background-color: #e4ddef;
-  color: #5d5d5d; */
   background-color: #f7f3ff;
   border-color: #b5a9ca;
 }
@@ -168,8 +171,6 @@ export default {
 .info {
   flex: 1;
 }
-.switch {
-}
 .count {
   font-size: 13px;
   margin-right: 15px;
@@ -179,10 +180,6 @@ export default {
 .all-selected {
   margin: 0 21px;
 }
-</style>
-
-<style>
-
 .el-checkbox .el-checkbox__inner {
   width: 22px;
   height: 22px;
@@ -191,7 +188,6 @@ export default {
 .el-checkbox__inner::after {
   height: 14px;
   left: 8px;
-  /* font-size: 30px; */
 }
 
 .fa {

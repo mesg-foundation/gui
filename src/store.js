@@ -27,11 +27,11 @@ export default {
         coreClient.listServices(request, {}, function(err, response) {
           var services = []
           // eslint-disable-next-line
-          console.log(err)
           response.getServicesList().forEach((service) => {
             services.push({
               hash: service.getHash(),
               sid: service.getSid(),
+              selected: false,
               name: service.getName(),
               status: service.getStatus(),
             })

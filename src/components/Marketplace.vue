@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .el-row {
   margin-bottom: 20px;
   &:last-child {
