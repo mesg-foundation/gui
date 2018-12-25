@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "webpack-dev-server",
+    "serve": "webpack-dev-server --mode=development",
     "build": "webpack"
   },
   "dependencies": {

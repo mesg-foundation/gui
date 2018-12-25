@@ -1,4 +1,4 @@
-<template> 
+<template>
   <div>
     <div class="head">
       <div class="title">Services</div>
