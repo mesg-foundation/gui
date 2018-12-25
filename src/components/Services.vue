@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="head">
       <div class="title">Services</div>
       <!-- <input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory> -->
@@ -44,6 +44,7 @@ export default {
     return {
       value2: true,
       allSelected: false,
+      loading: false
     }
   },
   computed: {
@@ -58,22 +59,31 @@ export default {
     this.refreshMessage()
   },
   methods: {
+    showLoading(){
+      this.loading = true;
+    },
+    hideLoading(){
+      this.loading = false;
+    },
     startServices(){
+      this.showLoading()
       this.$store.dispatch('startServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
-        console.log("done")
+        this.hideLoading()
       })
     },
     stopServices(){
+      this.showLoading()
       this.$store.dispatch('stopServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
-        console.log("done")
+        this.hideLoading()
       })
     },
     deleteServices(){
+      this.showLoading()
       this.$store.dispatch('deleteServices', this.getSelectedSIDs()).then(()=>{
         this.$store.dispatch('refreshServices')
-        console.log("done")
+        this.hideLoading()
       })
     },
     handleFiles(event){
