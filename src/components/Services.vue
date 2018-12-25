@@ -180,6 +180,9 @@ export default {
 .all-selected {
   margin: 0 21px;
 }
+</style>	
+ 
+<style>
 .el-checkbox .el-checkbox__inner {
   width: 22px;
   height: 22px;
