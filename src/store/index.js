@@ -8,6 +8,7 @@ import {
 } from '../../proto/api_pb.js'
 import { CoreClient} from '../../proto/api_pb_service.js'
 import axios from 'axios'
+import Targz from '../utils/targz'
 
 
 var coreClient = new CoreClient('http://localhost:50053');
@@ -121,32 +122,26 @@ export default {
         stream.write(req)
       })
     },
-    deployService(a,file) {
+    deployService(context, files) {
       return new Promise((resolve) => {
-        var request = new DeployServiceRequest();
-        // request.setUrl("https://github.com/mesg-foundation/service-webhook")
         var stream = coreClient.deployService();
         stream.on('data', function(a,b){
-          console.log(a,b)
-
-          resolve();
+          console.log(a)
         })
 
-              var reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onload = function() {
 
-        var arrayBuffer = this.result,
-          array = new Uint8Array(arrayBuffer)
-
-
+        var tar = new Targz((data) => {
           var request = new DeployServiceRequest();
-          request.setChunk(array)
-          console.log(1)
+          request.setChunk(data)
           stream.write(request)
-          stream.write(request)
-      }
+        },() => {
+          stream.end()
+        })
 
+        for (var i = 0; i < files.length; i++) {
+          tar.add(files[i])
+        }
+        tar.finish()
       });
     }
   }

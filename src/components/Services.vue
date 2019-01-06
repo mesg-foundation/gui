@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <div class="head">
       <div class="title">Services</div>
-      <!-- <input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory> -->
+      <!--<input type="file" @change="handleFiles" id="input" webkitdirectory mozdirectory>-->
       <div class="selections">
         <span v-if="count" class="count"><strong>{{ count }}</strong> selected</span>
         <el-button v-on:click="startServices" :disabled="!count" type="success" icon="fas fa-play" circle></el-button>
@@ -35,7 +35,6 @@
 <script>
 /* eslint-disable */
 import { StatusIndicator } from 'vue-status-indicator';
-
 export default {
   components: {
     StatusIndicator
@@ -94,8 +93,7 @@ export default {
       })
     },
     handleFiles(event){
-      console.log(event.target.files)
-      // this.$store.dispatch('deployService', event.target.files[0])
+      this.$store.dispatch('deployService', event.target.files)
     },
     getSelected() {
       return this.services.filter(service => service.selected)
