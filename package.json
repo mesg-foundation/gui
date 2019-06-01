@@ -31,7 +31,7 @@
     "promisfy": "^1.1.4",
     "style-loader": "^0.23.1",
     "tar-stream": "^1.6.2",
-    "ts-protoc-gen": "^0.8.0",
+    "ts-protoc-gen": "^0.10.0",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
     "vue-router": "^3.0.2",
