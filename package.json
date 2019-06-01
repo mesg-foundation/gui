@@ -30,7 +30,7 @@
     "pako": "^1.0.7",
     "promisfy": "^1.1.4",
     "style-loader": "^0.23.1",
-    "tar-stream": "^1.6.2",
+    "tar-stream": "^2.0.1",
     "ts-protoc-gen": "^0.8.0",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
