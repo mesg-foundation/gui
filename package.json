@@ -15,7 +15,7 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "blob-reader": "0.0.1",
